@@ -1,5 +1,22 @@
 pipeline {
   agent any
+  parameters{
+    booleanParam(name: 'Static_Check',
+      defaultValue: false,
+      description: 'Checkbox Parameter')
+    booleanParam(name: 'QA',
+      defaultValue: false,
+        description: 'Checkbox Parameter')
+    booleanParam(name: 'Unit_Test',
+      defaultValue: false,
+        description: 'Checkbox Parameter')
+    String(name: 'Success_Email',
+      defaultValue: 'govicloudarch@gmail.com',
+        description: 'mail id for success usecase')    
+    String(name: 'Failure_Email',
+      defaultValue: 'govicloudarch@gmail.com',
+        description: 'mail id for failure usecase')  
+  }
   stages {
     stage('Git Pull') {
       steps {
