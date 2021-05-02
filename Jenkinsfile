@@ -10,10 +10,10 @@ pipeline {
     booleanParam(name: 'Unit_Test',
       defaultValue: false,
         description: 'Checkbox Parameter')
-    String(name: 'Success_Email',
+    text(name: 'Success_Email',
       defaultValue: 'govicloudarch@gmail.com',
         description: 'mail id for success usecase')    
-    String(name: 'Failure_Email',
+    text(name: 'Failure_Email',
       defaultValue: 'govicloudarch@gmail.com',
         description: 'mail id for failure usecase')  
   }
