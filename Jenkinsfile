@@ -38,23 +38,24 @@ pipeline {
       }
     }
 
-  stages {
     stage('Build') {
       steps {
         echo 'Build if it is not a holiday as returned from previous'
       }
     }
-  parallel {
-   stages {
-    stage('Static Check') {
-      steps {
-        script {
-          if (params.Static_Check) {
-            echo 'Static Check - Yes'
-            stchkpass = true
-          } else {
-            echo 'Static Check - No'
-            stchkpass = false 
+stage ('Run Tests'){
+   parallel {
+     stage('Testing') {
+      stages {
+          stage ('static check'){   
+           steps {
+             script {
+               if (params.Static_Check) {
+               echo 'Static Check - Yes'
+               stchkpass = true
+            } else {
+               echo 'Static Check - No'
+               stchkpass = false 
           }
         }          
       }
@@ -73,9 +74,9 @@ pipeline {
          }
       }
      }
-    }
-  stages {
-    stage('Unit Test') {
+      }
+      
+stage('Unit Test') {
       steps {
         script {
               if (params.Unit_Test) {
