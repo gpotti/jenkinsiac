@@ -30,11 +30,9 @@ pipeline {
         echo 'Step to call rest api and check if its a holiday'
         isHoliday = false
         def today = new Date()
-        println today.format("yyyy-MM-dd") jenk
+        println today.format("yyyy-MM-dd")
         def holidays = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=2021'
         println("Status: "+holidays.status)
-        def keyList = holidays['"date":'].keySet()
-        println "${keyList}"
         writeJSON(file: 'holidays.json', json: response)
         }
       }
@@ -48,7 +46,14 @@ pipeline {
 
     stage('Static Check') {
       steps {
-        echo 'Execute if not a holiday and static_check parameter is selected'
+        script {
+           boolean status = Boolean.getBoolean(Static_Check);
+           if(!status) { 
+              echo 'Skipped'
+           } else {
+             echo 'executing static check'
+           }
+        }          
       }
     }
 
