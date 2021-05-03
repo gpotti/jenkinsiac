@@ -21,7 +21,6 @@ pipeline {
     stage('Git Pull') {
       steps {
         echo 'Pull repo from Git'
-        git branch: 'pipe_as_code', url: 'https://github.com/gpotti/jenkinsiac.git'
       }
     }
 
