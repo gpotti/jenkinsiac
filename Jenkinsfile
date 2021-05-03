@@ -47,12 +47,11 @@ pipeline {
     stage('Static Check') {
       steps {
         script {
-           boolean status = Boolean.getBoolean(Static_Check);
-           if(!status) { 
-              echo 'Skipped'
-           } else {
-             echo 'executing static check'
-           }
+          if (params.Static_Check) {
+            echo 'Static Check - Yes'
+          } else {
+            echo 'Static Check - No'
+          }
         }          
       }
     }
