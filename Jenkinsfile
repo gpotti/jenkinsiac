@@ -30,9 +30,11 @@ pipeline {
         echo 'Step to call rest api and check if its a holiday'
         isHoliday = false
         def today = new Date()
-        println today.format("yyyy-MM-dd") 
-        def response = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=2021'
-        println("Status: "+response.status)
+        println today.format("yyyy-MM-dd") jenk
+        def holidays = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=2021'
+        println("Status: "+holidays.status)
+        def keyList = holidays['"date":'].keySet()
+        echo "${keyList}"
         writeJSON(file: 'holidays.json', json: response)
         }
       }
