@@ -31,19 +31,21 @@ pipeline {
         isHoliday = false
         def today = new Date()
         println today.format("yyyy-MM-dd")
-        def holidays = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=2021'
+        def holidays = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=d'
         println("Status: "+holidays.status)
         writeJSON(file: 'holidays.json', json: holidays)
         }
       }
     }
 
+  stages {
     stage('Build') {
       steps {
         echo 'Build if it is not a holiday as returned from previous'
       }
     }
-
+  parallel {
+   stages {
     stage('Static Check') {
       steps {
         script {
@@ -70,8 +72,25 @@ pipeline {
            }
          }
       }
+     }
     }
-
+  stages {
+    stage('Unit Test') {
+      steps {
+        script {
+              if (params.Unit_Test) {
+                  echo 'Unit Test - Yes'
+                } else {
+                  echo 'Unit Test - No'
+                }
+         }
+      }
+     }
+    }
+    }
+  }
+    
+    
     stage('Summary') {
       steps {
         echo 'List all the executed steps'
