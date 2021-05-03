@@ -28,9 +28,11 @@ pipeline {
     stage('Checking holiday') {
       steps {
         echo 'Step to call rest api and check if its a holiday'
+        script {
         def response = httpRequest 'https://calendarific.com/api/v2/holidays?&api_key=48de66774abaace74f8e418c644ae0ad9517fed2&country=IN&year=2021'
         println("Status: "+response.status)
         println("Content: "+response.content)
+        }
       }
     }
 
