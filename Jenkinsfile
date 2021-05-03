@@ -49,8 +49,10 @@ pipeline {
         script {
           if (params.Static_Check) {
             echo 'Static Check - Yes'
+            stchkpass = true
           } else {
             echo 'Static Check - No'
+            stchkpass = false 
           }
         }          
       }
@@ -58,7 +60,15 @@ pipeline {
 
     stage('QA') {
       steps {
-        echo 'If not holiday, if QA checkbox enabled and if static check passes'
+        script {
+          if (stchkpass) {
+              if (params.QA) {
+                  echo 'QA - Yes'
+                } else {
+                  echo 'QA - No'
+                }
+           }
+         }
       }
     }
 
